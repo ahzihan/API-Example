@@ -15,7 +15,11 @@ const displayCountry = data => {
         div.classList.add( 'style' );
         div.innerHTML = `
         <h1>Name: ${ country.name }</h1>
+        <h2>Native Name: ${ country.nativeName }</h2>
         <h3>Capital : ${ country.capital }</h3>
+        <h3>Language : ${ country.languages[ 0 ].name }</h3>
+        <h3>Population : ${ country.population }</h3>
+        <h3>Area : ${ country.area }, SFT</h3>
         <h4>Sub Region : ${ country.subregion }</h4>
         <img src="${ country.flag }">
         `;
