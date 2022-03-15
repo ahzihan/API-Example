@@ -1,0 +1,10 @@
+.style{
+    padding: 10px;
+
+    border: 2px solid turquoise;
+    border-radius: 20px;
+    background-color: bisque;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 15px;
+}
