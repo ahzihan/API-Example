@@ -1,10 +1,11 @@
 const message = document.getElementById( 'message' );
+const errorMessage = message.innerText;
 const searchFood = async () => {
     const searchField = document.getElementById( 'search-field' );
     const searchValue = searchField.value;
     searchField.value = '';
     if ( searchField == '' ) {
-        message.innerText = "Please Type Something!";
+        errorMessage = "Please Type Something!";
     } else {
         message.innerText = "";
     }
@@ -59,7 +60,7 @@ const displaySingleMeal = mealDetail => {
     singleDetails.textContent = "";
     const div = document.createElement( 'div' );
     div.innerHTML = `
-                    <img src="${ mealDetail.strMealThumb }" class="card-img-top" alt="...">
+                    <img src="${ mealDetail.strMealThumb }" class="mw-75 card-img-top" alt="Image">
                     <div class="card-body">
                         <h5 class="card-title">${ mealDetail.strMeal }</h5>
                         <p class="card-text">${ mealDetail.strInstructions }</p>
