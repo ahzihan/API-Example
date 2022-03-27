@@ -6,6 +6,9 @@ const toggleSpinner = displayStyle => {
 const toggleMeal = displayStyle => {
     document.getElementById( 'main' ).style.display = displayStyle;
 };
+const togglesingle = displayStyle => {
+    document.getElementById( 'single-meal' ).style.display = displayStyle;
+};
 const searchFood = async () => {
 
     const searchField = document.getElementById( 'search-field' );
@@ -16,6 +19,7 @@ const searchFood = async () => {
     } else {
         toggleSpinner( 'block' );
         // toggleMeal( 'none' );
+        togglesingle( 'none' );
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${ searchValue
             }`;
         const res = await fetch( url );
@@ -51,6 +55,7 @@ const displayFood = foods => {
         } );
         toggleSpinner( 'none' );
         // toggleMeal( 'block' );
+        // togglesingle( 'block' );
         message.innerText = '';
     }
 
@@ -75,8 +80,9 @@ const displaySingleMeal = mealDetail => {
                     <img src="${ mealDetail.strMealThumb }" class="mw-75 card-img-top" alt="Image">
                     <div class="card-body">
                         <h5 class="card-title">${ mealDetail.strMeal }</h5>
-                        <p class="card-text">${ mealDetail.strInstructions }</p>
+                        <p class="card-text">${ mealDetail.strInstructions.slice( 0, 300 ) }</p>
                     </div>
                     `;
     singleDetails.appendChild( div );
+    togglesingle( 'block' );
 };
