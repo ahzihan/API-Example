@@ -1,19 +1,29 @@
 const message = document.getElementById( 'message' );
-const errorMessage = message.innerText;
+
+const toggleSpinner = displayStyle => {
+    document.getElementById( 'spinner' ).style.display = displayStyle;
+};
+const toggleMeal = displayStyle => {
+    document.getElementById( 'main' ).style.display = displayStyle;
+};
 const searchFood = async () => {
+
     const searchField = document.getElementById( 'search-field' );
     const searchValue = searchField.value;
     searchField.value = '';
-    if ( searchField == '' ) {
-        errorMessage = "Please Type Something!";
+    if ( searchValue == '' ) {
+        message.innerText = "Please Type Something!";
     } else {
+        toggleSpinner( 'block' );
+        // toggleMeal( 'none' );
+        const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${ searchValue
+            }`;
+        const res = await fetch( url );
+        const data = await res.json();
+        displayFood( data.meals );
         message.innerText = "";
     }
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${ searchValue
-        }`;
-    const res = await fetch( url );
-    const data = await res.json();
-    displayFood( data.meals );
+
     // fetch( url )
     //     .then( res => res.json() )
     //     .then( data => displayFood( data.meals ) );
@@ -23,25 +33,27 @@ const displayFood = foods => {
     const main = document.getElementById( 'main' );
     // main.innerHTML = '';
     main.textContent = '';
-
-    if ( foods.length == 0 ) {
-        message.innerText = 'No result found!';
+    if ( foods.length < 1 ) {
+        message.innerText = 'No item found!';
     } else {
-        message.innerText = '';
-    }
-    foods.forEach( food => {
-        const div = document.createElement( 'div' );
-        div.innerHTML = `
+        foods.forEach( food => {
+            const div = document.createElement( 'div' );
+            div.innerHTML = `
                 <div onclick="loadMealDetails(${ food.idMeal })" class="card">
                     <img src="${ food.strMealThumb }" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${ food.strMeal }</h5>
-                        <p class="card-text">${ food.strInstructions.slice( 0, 200 ) }</p>
+                        <p class="card-text">${ food.strInstructions.slice( 0, 150 ) }</p>
                     </div>
                 </div>
                 `;
-        main.appendChild( div );
-    } );
+            main.appendChild( div );
+        } );
+        toggleSpinner( 'none' );
+        // toggleMeal( 'block' );
+        message.innerText = '';
+    }
+
 };
 
 const loadMealDetails = async mealId => {
